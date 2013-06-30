@@ -66,7 +66,17 @@
     // Fake a link to trigger download of csv export.
     link.setAttribute("href", encodeURI(output));
     link.setAttribute("download", "moodscope_export.csv");
-    link.click();
+
+    // Dispatch our own click event to fix .click() issue on FF and mobile browsers. 
+    (function(){
+      var simClick = function(node) {
+          var event = document.createEvent('MouseEvents');
+          event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+          node.dispatchEvent(event);
+      }
+      simClick(link);
+    }());
+    
   });
 
 }(jQuery));
