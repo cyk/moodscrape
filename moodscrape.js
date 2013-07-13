@@ -43,6 +43,11 @@
     var output = 'data:text/csv;charset=utf-8,',
         link = document.createElement('a');
 
+    // abort if scores are empty
+    if ($.isEmptyObject(scores)) {
+      return;
+    }
+
     // iterate over scores
     $.each(scores, function() {
       var date = this.url.replace('/chart/annotate/', ''),
